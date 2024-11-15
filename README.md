@@ -19,9 +19,8 @@
 
 </p>
 
-<div align="center">
-	![alt text](https://github.com/0ndrec/hertbeat/blob/main/img.png)
-</div>
+
+![alt text](https://github.com/0ndrec/hertbeat/blob/main/img.png)
 
 <!-- Status -->
 
