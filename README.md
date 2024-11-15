@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Heartbeat" />
+  <img src="./.github/img.png" alt="Heartbeat" />
 
   &#xa0;
 
@@ -19,8 +19,6 @@
 
 </p>
 
-
-![alt text](https://github.com/0ndrec/hertbeat/blob/main/img.png)
 
 <!-- Status -->
 
