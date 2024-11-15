@@ -40,6 +40,9 @@
 
 <br>
 
+![img](https://github.com/0ndrec/heartbeat/blob/1c6529e533c7e1e9e53bc6d7179420d0b3020872/img.png)
+
+
 ## :dart: About ##
 
 Heartbeat is a Python script that sends a heartbeat via websocket to a specified server.
