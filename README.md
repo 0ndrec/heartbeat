@@ -50,15 +50,15 @@ Heartbeat is a Python script that sends a heartbeat via websocket to a specified
 ## Installation ##
 
 ```bash
-$ git clone https://github.com/{{YOUR_GITHUB_USERNAME}}/heartbeat.git
+$ git clone https://github.com/0ndrec/heartbeat.git
 $ cd heartbeat
 
 # Prepare virtual environment
-chmod +x prepare.sh
-./prepare.sh
+$ chmod +x prepare.sh
+$ ./prepare.sh
 
 # Run heartbeat
-python teneo_cli.py
+$ python teneo_cli.py
 
 ```
 
