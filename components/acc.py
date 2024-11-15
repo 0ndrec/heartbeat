@@ -58,7 +58,7 @@ class UserManager:
             response = requests.post(signup_url, json={
                 'email': email,
                 'password': password,
-                'data': {'invited_by': "KGWku"},
+                'data': {'invited_by': "teL7Y"},
                 'gotrue_meta_security': {},
                 'code_challenge': None,
                 'code_challenge_method': None
