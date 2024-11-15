@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Heartbeat" />
+  <img src="./.github/img.png" alt="Heartbeat" />
 
   &#xa0;
 
@@ -18,6 +18,7 @@
   <img alt="License" src="https://img.shields.io/github/license/{{YOUR_GITHUB_USERNAME}}/heartbeat?color=56BEB8">
 
 </p>
+
 
 <!-- Status -->
 
@@ -39,6 +40,9 @@
 
 <br>
 
+![img](https://github.com/0ndrec/heartbeat/blob/1c6529e533c7e1e9e53bc6d7179420d0b3020872/img.png)
+
+
 ## :dart: About ##
 
 Heartbeat is a Python script that sends a heartbeat via websocket to a specified server.
@@ -46,15 +50,15 @@ Heartbeat is a Python script that sends a heartbeat via websocket to a specified
 ## Installation ##
 
 ```bash
-$ git clone https://github.com/{{YOUR_GITHUB_USERNAME}}/heartbeat.git
+$ git clone https://github.com/0ndrec/heartbeat.git
 $ cd heartbeat
 
 # Prepare virtual environment
-chmod +x prepare.sh
-./prepare.sh
+$ chmod +x prepare.sh
+$ ./prepare.sh
 
 # Run heartbeat
-python teneo_cli.py
+$ python teneo_cli.py
 
 ```
 
