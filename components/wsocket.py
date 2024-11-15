@@ -35,8 +35,11 @@ class WebSocketConnector:
         self.socket.on_message = self.on_message
         self.socket.on_close = self.on_close
         self.socket.on_error = self.on_error
-
-        threading.Thread(target=self.socket.run_forever).start()
+        
+        try:
+            threading.Thread(target=self.socket.run_forever).start()
+        except Exception as e:
+            print(f"Error during connect: {e}")
 
     def disconnect(self):
         if self.socket:
@@ -78,6 +81,13 @@ class WebSocketConnector:
 
     def on_error(self, ws, error):
         print("WebSocket error:", error)
+        try:
+            time.sleep(5)
+            self.socket = None
+            self.connect_web_socket()
+        except Exception as e:
+            print(f"Error...")
+
 
     def start_pinging(self):
         self.stop_pinging()

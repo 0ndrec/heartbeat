@@ -1,3 +1,4 @@
 localStorage.json
 .env
 env
+*__pycache__*
