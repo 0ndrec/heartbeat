@@ -19,6 +19,10 @@
 
 </p>
 
+<div align="center">
+	![alt text](https://github.com/0ndrec/cli-evm-accs/blob/main/img.gif)
+</div>
+
 <!-- Status -->
 
 <!-- <h4 align="center"> 
