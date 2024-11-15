@@ -85,7 +85,7 @@ class WebSocketConnector:
             time.sleep(5)
             self.socket = None
             self.connect_web_socket()
-        except Exception as e:
+        except:
             print(f"Error...")
 
 
