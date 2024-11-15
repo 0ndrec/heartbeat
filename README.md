@@ -20,7 +20,7 @@
 </p>
 
 <div align="center">
-	![alt text](https://github.com/0ndrec/cli-evm-accs/blob/main/img.gif)
+	![alt text](https://github.com/0ndrec/hertbeat/blob/main/img.png)
 </div>
 
 <!-- Status -->
