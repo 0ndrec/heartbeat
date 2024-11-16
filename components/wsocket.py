@@ -70,11 +70,15 @@ class WebSocketConnector:
     def on_close(self, ws, close_status_code, close_msg):
         try:
             self.socket = None
-            print(f"WebSocket disconnected with code: {close_status_code}, reason: {close_msg}")
+            print(f"WebSocket disconnected with code: {close_status_code or 'None'}, reason: {close_msg or 'None'}")
             self.stop_pinging()
             time.sleep(self.retry_delay)
             self.retry_delay = min(self.retry_delay * 2, 30)
-            self.connect_web_socket()  # Assume user_id and proxy are stored in TeneoNodeCLI
+            # Ensure connect method is called with necessary parameters
+            if hasattr(self, 'user_id') and hasattr(self, 'proxy'):
+                self.connect(self.user_id, self.proxy)
+            else:
+                print("Missing user_id or proxy for reconnection.")
         except Exception as e:
             print(f"Error during on_close: {e}")
             self.retry_delay = 1  # Reset the retry delay in case of error
