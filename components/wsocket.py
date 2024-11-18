@@ -75,10 +75,11 @@ class WebSocketConnector:
             time.sleep(self.retry_delay)
             self.retry_delay = min(self.retry_delay * 2, 30)
             # Ensure connect method is called with necessary parameters
-            if hasattr(self, 'user_id') and hasattr(self, 'proxy'):
-                self.connect(self.user_id, self.proxy)
+            if hasattr(self, 'user_id'):
+                self.connect(self.user_id)
+                print("Reconnected with user_id:", self.user_id)
             else:
-                print("Missing user_id or proxy for reconnection.")
+                print("Missing user_id for reconnection.")
         except Exception as e:
             print(f"Error during on_close: {e}")
             self.retry_delay = 1  # Reset the retry delay in case of error
