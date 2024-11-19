@@ -17,6 +17,7 @@ class WebSocketConnector:
         self.retry_delay = 1
         self.local_storage_manager = local_storage_manager
         self.countdown_manager = countdown_manager
+        self.user_id = None
 
     def connect(self, user_id, proxy=None):
         if self.socket:
@@ -40,12 +41,14 @@ class WebSocketConnector:
             threading.Thread(target=self.socket.run_forever).start()
         except Exception as e:
             print(f"Error during connect: {e}")
+        self.user_id = user_id
 
     def disconnect(self):
         if self.socket:
             self.socket.close()
             self.socket = None
             self.stop_pinging()
+            self.user_id = None
 
     def on_open(self, ws):
         connection_time = datetime.now().isoformat()
@@ -62,7 +65,7 @@ class WebSocketConnector:
             self.local_storage_manager.set_local_storage({
                 'lastUpdated': last_updated,
                 'pointsTotal': data['pointsTotal'],
-                'pointsToday': data['pointsToday'],
+                'pointsToday': data['pointsToday']
             })
             self.countdown_manager.points_total = data['pointsTotal']
             self.countdown_manager.points_today = data['pointsToday']
@@ -70,12 +73,12 @@ class WebSocketConnector:
     def on_close(self, ws, close_status_code, close_msg):
         try:
             self.socket = None
-            print(f"WebSocket disconnected with code: {close_status_code or 'None'}, reason: {close_msg or 'None'}")
+            print(f"WebSocket disconnected for user: {self.user_id},  with code: {close_status_code or 'None'}, reason: {close_msg or 'None'}")
             self.stop_pinging()
             time.sleep(self.retry_delay)
             self.retry_delay = min(self.retry_delay * 2, 30)
             # Ensure connect method is called with necessary parameters
-            if hasattr(self, 'user_id'):
+            if self.user_id:
                 self.connect(self.user_id)
                 print("Reconnected with user_id:", self.user_id)
             else:
@@ -86,12 +89,10 @@ class WebSocketConnector:
 
     def on_error(self, ws, error):
         print("WebSocket error:", error)
-        try:
-            time.sleep(5)
-            self.socket = None
-            self.connect_web_socket()
-        except:
-            print(f"Error...")
+        time.sleep(2)
+        self.socket = None
+        self.connect_web_socket()
+
 
 
     def start_pinging(self):

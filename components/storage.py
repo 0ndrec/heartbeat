@@ -16,10 +16,6 @@ class LocalStorageManager:
     @staticmethod
     def set_local_storage(data):
         current_data = LocalStorageManager.get_local_storage()
-        user_id = current_data.get('userId', None)
         new_data = {**current_data, **data}
-        if user_id is not None:
-            # Keep the user ID in localStorage if it exists
-            new_data['userId'] = user_id
         with open('localStorage.json', 'w') as f:
             json.dump(new_data, f)
