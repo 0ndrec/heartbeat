@@ -1,6 +1,8 @@
 import os
 import json
+import re
 import colorama
+from components.imapwatcher import IMAPWatcher
 from components.storage import LocalStorageManager
 from components.countdown import CountdownManager
 from components.acc import UserManager
@@ -36,7 +38,7 @@ def handle_user_input():
 
 def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, websocket_connector, user_manager):
     if not user_id:
-        option = input("User ID not found. Would you like to:\n1. Register an account\n2. Login to your account\n3. Enter User ID manually\n4. Register an from list\nChoose an option: ")
+        option = input("User ID not found. Would you like to:\n1. Register an account\n2. Login to your account\n3. Enter User ID manually\n4. Register an from list\n5. Approval emails\nChoose an option: ")
         if option == '1':
             user_manager.register_user()
         elif option == '2':
@@ -55,10 +57,22 @@ def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, w
                     print(f"Created, User ID: {json_data['id']}")
                 except Exception as e:
                     print(f"Error registering user with email {email}: {e}")
-
-        else:
-            print('Invalid option. Exiting...')
-            return
+        # Process approval email sended code
+        elif option == '5':
+            accounts = accounts_list(list_file)
+            for email, password in accounts.items():
+                print(f'Checking email: {email}')
+                wathcher = IMAPWatcher(email, password, "imap.gmail.com", 993, "nreply@noreply.teneo.pro") #Only for gmail using
+                try:
+                    wathcher.connect()
+                    mailbody = wathcher.get_latest_email()
+                    # Find a link who start from "https://eu-west-1.resend-clicks.com"
+                    link = re.findall(r'https://eu-west-1.resend-clicks.com/.*', str(mailbody))
+                    # extract the link
+                    link = link[0].split()[0]
+                    print(f"Please click the link for confirmation: {link}")
+                except Exception as e:
+                    print(f"Error registering user with email {email}: {e}")
     else:
         option = input("Menu:\n1. Logout\n2. Start Running Node\nChoose an option: ")
         if option == '1':

@@ -2,3 +2,4 @@ localStorage.json
 .env
 env
 *__pycache__*
+temp.py
