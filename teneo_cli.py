@@ -2,6 +2,7 @@ import os
 import json
 import re
 import colorama
+import multiprocessing
 from components.imapwatcher import IMAPWatcher
 from components.storage import LocalStorageManager
 from components.countdown import CountdownManager
@@ -38,11 +39,13 @@ def handle_user_input():
 
 def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, websocket_connector, user_manager):
     if not user_id:
-        option = input("User ID not found. Would you like to:\n1. Register an account\n2. Login to your account\n3. Enter User ID manually\n4. Register an from list\n5. Approval emails\nChoose an option: ")
+        option = input("User ID not found. Would you like to:\n1. Register an account\n2. Login to your account\n3. Enter User ID manually\n4. Register an from list\n5. Approval emails\n6. Run from list\nChoose an option: ")
         if option == '1':
             user_manager.register_user()
         elif option == '2':
-            user_manager.get_user_id(proxy)
+            email = input("Enter your email: ")
+            password = input("Enter your password: ")
+            user_manager.get_user_id(proxy, email, password)
         elif option == '3':
             user_id = input("Please enter your user ID: ")
             local_storage_manager.set_local_storage({'userId': user_id})
@@ -73,6 +76,24 @@ def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, w
                     print(f"Please click the link for confirmation: {link}")
                 except Exception as e:
                     print(f"Error registering user with email {email}: {e}")
+        elif option == '6':
+            accounts = accounts_list(list_file)
+            # Create a new multiprocessing pool
+            pool = multiprocessing.Pool()
+            # Process each account in parallel
+            for email, password in accounts.items():
+                try:
+                    user_id = user_manager.get_user_id(proxy, email, password)
+                    if user_id is not None:
+                        pool.apply_async(countdown_manager.start_countdown_and_points)
+                        pool.apply_async(websocket_connector.connect, args=(user_id, proxy))
+                        print(f"Started countdown and points for user ID: {user_id}")
+                except Exception as e:
+                    print(f"Error with email {email}: {e}")
+            pool.close()
+            if pool._state == 'CLOSE':
+                pool.join()
+
     else:
         option = input("Menu:\n1. Logout\n2. Start Running Node\nChoose an option: ")
         if option == '1':
@@ -82,8 +103,7 @@ def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, w
         elif option == '2':
             countdown_manager.start_countdown_and_points() # Start the countdown
             websocket_connector.connect(user_id, proxy) # Connect to the WebSocket
-        else:
-            print('Invalid option. Exiting...')
+
 
 def main():
     print('\n')

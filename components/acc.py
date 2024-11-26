@@ -13,12 +13,8 @@ class UserManager:
         self.authorization = authorization
         self.apikey = apikey
 
-    def get_user_id(self, proxy=None):
+    def get_user_id(self, proxy=None, email=None, password=None):
         login_url = f"{SUPABASE_URL}/auth/v1/token?grant_type=password"
-
-        email = input("Email: ")
-        password = input("Password: ")
-
         try:
             response = requests.post(login_url, json={
                 'email': email,
