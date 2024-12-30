@@ -19,12 +19,13 @@ class WebSocketConnector:
         self.countdown_manager = countdown_manager
         self.user_id = None
 
-    def connect(self, user_id, proxy=None):
+    def connect(self, user_id, proxy=None, access_token=None):
         if self.socket:
             return
         version = "v0.2"
         url = "wss://secure.ws.teneo.pro"
-        ws_url = f"{url}/websocket?userId={user_id}&version={version}"
+        ws_url = f"{url}/websocket?accessToken={access_token}&version={version}"
+
 
         options = {}
         if proxy:

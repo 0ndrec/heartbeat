@@ -18,6 +18,7 @@ RESET = colorama.Fore.RESET
 
 SUPABASE_BEAREBER = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag"
+ACCESS_TOKEN = ""
 
 #Find accounts.list in current directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -50,7 +51,7 @@ def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, w
             user_id = input("Please enter your user ID: ")
             local_storage_manager.set_local_storage({'userId': user_id})
             countdown_manager.start_countdown_and_points()
-            websocket_connector.connect(user_id, proxy)
+            websocket_connector.connect(user_id, proxy, ACCESS_TOKEN)
         elif option == '4':
             accounts = accounts_list(list_file)
             for email, password in accounts.items():
@@ -86,7 +87,7 @@ def handle_user_menu(user_id, proxy, local_storage_manager, countdown_manager, w
                     user_id = user_manager.get_user_id(proxy, email, password)
                     if user_id is not None:
                         pool.apply_async(countdown_manager.start_countdown_and_points)
-                        pool.apply_async(websocket_connector.connect, args=(user_id, proxy))
+                        pool.apply_async(websocket_connector.connect, args=(user_id, proxy, ACCESS_TOKEN))
                         print(f"Started countdown and points for user ID: {user_id}")
                 except Exception as e:
                     print(f"Error with email {email}: {e}")

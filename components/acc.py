@@ -4,6 +4,9 @@ from components.storage import LocalStorageManager
 from components.countdown import CountdownManager
 from components.wsocket import WebSocketConnector
 
+LOGIN_URL = "https://auth.teneo.pro/api/login" #return Bearer (access_token)
+STATS_URL = "https://stats.teneo.pro/api/users/stats" #required Bearer
+
 SUPABASE_URL = "https://ikknngrgxuxgjhplbpey.supabase.co"
 SUPABASE_BEAREBER = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlra25uZ3JneHV4Z2pocGxicGV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0MzgxNTAsImV4cCI6MjA0MTAxNDE1MH0.DRAvf8nH1ojnJBc3rD_Nw6t1AV8X_g6gmY_HByG2Mag"
